@@ -17,8 +17,8 @@ public class Department {
     @Column(columnDefinition = "serial")
     private int id;
 
-    @Column(name="emp_id")
-    private int employeeId;
+    @Column(name="emp_name")
+    private int employeeName; 
 
     private String department;
 }
