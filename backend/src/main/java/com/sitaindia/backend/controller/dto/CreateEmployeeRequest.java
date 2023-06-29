@@ -1,0 +1,23 @@
+package com.sitaindia.backend.controller.dto;
+
+import java.io.Serializable;
+import java.sql.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+
+public class CreateEmployeeRequest{
+    private String empName;
+    private int amount;
+    private String currency;
+    private String joiningDate;
+    private String exitDate;
+    private String department; 
+}

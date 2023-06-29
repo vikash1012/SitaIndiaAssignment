@@ -1,14 +1,16 @@
-package com.sitaindia.backend.backend.model;
+package com.sitaindia.backend.model;
 
-import java.util.Date;
+import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Entity
 @Table(name= "employee")
@@ -31,7 +33,7 @@ public class Employee {
     private Date exitDate;
 
     @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="emp_id")
+    @JoinColumn(name="dep_id_fk")
     private Department department;
-    
+
 }
