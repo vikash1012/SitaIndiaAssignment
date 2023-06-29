@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sitaindia.backend.controller.dto.CreateEmployeeRequest;
+import com.sitaindia.backend.controller.dto.GetAllEmployeeResponse;
 import com.sitaindia.backend.model.Department;
 import com.sitaindia.backend.model.Employee;
 import com.sitaindia.backend.repository.EmployeeRepository;
@@ -26,27 +27,45 @@ public class EmployeeService {
 
     public void create(List<CreateEmployeeRequest> employeeRequests) {
         List<Employee> employees=new ArrayList<>();
-        System.out.println(employeeRequests.get(0).getJoiningDate());
+        employees = parsingRequestToDataModel(employeeRequests);
+        this.employeeRepository.create(employees);
+      }
+
+    public GetAllEmployeeResponse getEmployee(String date) {
+        return null;
+    }
+
+    private List<Employee> parsingRequestToDataModel(List<CreateEmployeeRequest> employeeRequests) {
+        List<Employee> employees;
         employees=employeeRequests.stream().map(emp->{
-            Employee employee=new Employee();
-            employee.setEmployeeName(emp.getEmpName());
-            employee.setAmount(emp.getAmount());
-            employee.setCurrency(emp.getCurrency());
-            employee.setJoiningDate(parseDate(emp.getJoiningDate()));
-            employee.setExitDate(parseDate(emp.getExitDate()));
-            Department department=new Department();
-            department.setDepartment(emp.getDepartment());
+            Employee employee = parsingRequestToEmployeeModel(emp);
+            Department department = parsingRequestToDepartmentModel(emp);
             employee.setDepartment(department);
             return employee;
         }
         ).collect(Collectors.toList());
-        this.employeeRepository.create(employees);
-      }
+        return employees;
+    }
+
+    private Department parsingRequestToDepartmentModel(CreateEmployeeRequest emp) {
+        Department department=new Department();
+        department.setDepartment(emp.getDepartment());
+        return department;
+    }
+
+    private Employee parsingRequestToEmployeeModel(CreateEmployeeRequest emp) {
+        Employee employee=new Employee();
+        employee.setEmployeeName(emp.getEmpName());
+        employee.setAmount(emp.getAmount());
+        employee.setCurrency(emp.getCurrency());
+        employee.setJoiningDate(parseDate(emp.getJoiningDate()));
+        employee.setExitDate(parseDate(emp.getExitDate()));
+        return employee;
+    }
 
     private Date parseDate(String date) {
         String[] splitDate=date.split("-");
         int getMonth=getMonthNumber(splitDate[0]);
-        // System.out.println(getMonth);
         return Date.valueOf(splitDate[2]+"-"+getMonth+"-"+splitDate[1]);
     }
 
