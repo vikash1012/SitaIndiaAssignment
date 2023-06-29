@@ -1,8 +1,5 @@
 package com.sitaindia.backend.controller.dto;
 
-import java.io.Serializable;
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
