@@ -1,6 +1,7 @@
 package com.sitaindia.backend.controller.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
+@EqualsAndHashCode
 public class EmployeeRequest{
     private String empName;
     private int amount;

@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.exceptions.base.MockitoException;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.sitaindia.backend.controller.dto.CreateEmployeeResponse;
@@ -48,10 +47,10 @@ public class EmployeeRepositoryTest {
     }
 
     @Test
-    void shouldCreateEmployee(){
-        Date joinDate=Date.valueOf("2023-12-10");
-        Date exitDate=Date.valueOf("2001-12-10");
-        Employee employee = createEmployee(joinDate, exitDate);
+    void shouldSaveEmployeeRequest(){
+        Date exiDate=Date.valueOf("2023-12-10");
+        Date joinDate=Date.valueOf("2001-12-10");
+        Employee employee = createEmployee(joinDate,exiDate);
         List<Employee> employees=List.of(employee);
 
         this.employeeRepository.create(employees);
