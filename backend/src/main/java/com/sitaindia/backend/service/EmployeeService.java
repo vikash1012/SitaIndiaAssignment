@@ -30,6 +30,7 @@ public class EmployeeService {
         List<EmployeeRequest> employeeRequestList=employees.getEmployees();
         List<Employee> employeesData=new ArrayList<>();
         employeesData = parsingRequestToDataModel(employeeRequestList);
+        System.out.println(employeesData.get(0).getJoiningDate());
         this.employeeRepository.create(employeesData);
       }
 

@@ -14,6 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Setter
 @Entity
+@EqualsAndHashCode
 @Table(name= "employee")
 public class Employee {
     @Id

@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.sitaindia.backend.controller.dto.CreateEmployeeResponse;
 import com.sitaindia.backend.controller.dto.EmployeeResponse;
+import com.sitaindia.backend.model.Department;
 import com.sitaindia.backend.model.Employee;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,7 +25,6 @@ public class EmployeeRepositoryTest {
 
     @Mock
     JPAEmployeeRepository jpaEmployeeRepository;
-
 
     @BeforeEach
     void init(){
@@ -35,7 +35,7 @@ public class EmployeeRepositoryTest {
     void shouldReturnAllEmployee(){
         Date date=Date.valueOf("2001-12-10");
         List<EmployeeResponse> employeeResponses= List.of(new EmployeeResponse("vikash", 10000));
-         List<CreateEmployeeResponse> expected=List.of(new CreateEmployeeResponse("INR", employeeResponses));
+        List<CreateEmployeeResponse> expected=List.of(new CreateEmployeeResponse("INR", employeeResponses));
         when(this.jpaEmployeeRepository.findListOfUniqueCurrencies()).thenReturn(List.of("INR"));
         when(this.jpaEmployeeRepository.findEmployee("INR", date)).thenReturn(employeeResponses);
        
@@ -43,7 +43,7 @@ public class EmployeeRepositoryTest {
 
         assertEquals(expected,actual);
         verify(jpaEmployeeRepository,times(1)).findListOfUniqueCurrencies();
-         verify(jpaEmployeeRepository,times(1)).findEmployee("INR", date);
+        verify(jpaEmployeeRepository,times(1)).findEmployee("INR", date);
     }
 
     @Test
@@ -65,6 +65,9 @@ public class EmployeeRepositoryTest {
         employee.setCurrency("INR");
         employee.setExitDate(exitDate);
         employee.setJoiningDate(joinDate);
+        Department department=new Department();
+        department.setDepartment("it");
+        employee.setDepartment(department);
         return employee;
     }
 }

@@ -32,8 +32,7 @@ public class EmployeeServiceTest{
 
     @Mock
     EmployeeRepository employeeRepository;
-
-
+    
     @BeforeEach
     void init(){
         employeeService=new EmployeeService(employeeRepository);
@@ -44,17 +43,13 @@ public class EmployeeServiceTest{
          Date exitDate=Date.valueOf("2090-05-12");
         Date joinDate=Date.valueOf("2000-06-23");
         Employee employee = createEmployee(joinDate, exitDate);
-        Department department=new Department();
-        department.setDepartment("it");
-        employee.setDepartment(department);
         List<Employee> employees=List.of(employee);
+        
         doNothing().when(employeeRepository).create(any());
 
         this.employeeService.create(createEmployeeRequest);
 
         verify(employeeRepository,times(1)).create(any());
-
-
     }
     
     @Test
@@ -68,8 +63,8 @@ public class EmployeeServiceTest{
          GetAllEmployeeResponse actual=this.employeeService.getEmployee(date);
 
          assertEquals(expected,actual);
-       
     }
+
     private Employee createEmployee(Date joinDate, Date exitDate) {
         Employee employee=new Employee();
         employee.setEmployeeName("Vikash");
@@ -77,6 +72,9 @@ public class EmployeeServiceTest{
         employee.setCurrency("INR");
         employee.setExitDate(exitDate);
         employee.setJoiningDate(joinDate);
+        Department department=new Department();
+        department.setDepartment("it");
+        employee.setDepartment(department);
         return employee;
     }
     
