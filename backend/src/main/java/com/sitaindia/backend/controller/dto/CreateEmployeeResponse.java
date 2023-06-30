@@ -11,7 +11,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateEmployeeRequest {
-    List<EmployeeRequest> employees;
+public class CreateEmployeeResponse{
+    String currency;
+    List<EmployeeResponse> employees;
     
 }

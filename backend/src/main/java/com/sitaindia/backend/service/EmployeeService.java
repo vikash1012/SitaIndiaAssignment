@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sitaindia.backend.controller.dto.CreateEmployeeRequest;
+import com.sitaindia.backend.controller.dto.CreateEmployeeResponse;
+import com.sitaindia.backend.controller.dto.EmployeeRequest;
 import com.sitaindia.backend.controller.dto.GetAllEmployeeResponse;
 import com.sitaindia.backend.model.Department;
 import com.sitaindia.backend.model.Employee;
@@ -18,24 +19,28 @@ import com.sitaindia.backend.repository.EmployeeRepository;
 public class EmployeeService {
     
     EmployeeRepository employeeRepository;
-    private final static List<String> months=List.of("january","february","march","april","may","june","july","august","september","october","november","december");
 
-    @Autowired
+    private final static List<String> months=List.of("january","february","march","april","may","june","july","august","september","october","november","december");
+ 
     public EmployeeService(EmployeeRepository employeeRepository){
         this.employeeRepository=employeeRepository;
     }
 
-    public void create(List<CreateEmployeeRequest> employeeRequests) {
-        List<Employee> employees=new ArrayList<>();
-        employees = parsingRequestToDataModel(employeeRequests);
-        this.employeeRepository.create(employees);
+    public void create(CreateEmployeeRequest employees) {
+        List<EmployeeRequest> employeeRequestList=employees.getEmployees();
+        List<Employee> employeesData=new ArrayList<>();
+        employeesData = parsingRequestToDataModel(employeeRequestList);
+        this.employeeRepository.create(employeesData);
       }
 
     public GetAllEmployeeResponse getEmployee(String date) {
-        return null;
+        Date parsedDate=parseDate(date);
+        List<CreateEmployeeResponse> employees=this.employeeRepository.getAllEmployee(parsedDate);
+        return new GetAllEmployeeResponse(employees);
+
     }
 
-    private List<Employee> parsingRequestToDataModel(List<CreateEmployeeRequest> employeeRequests) {
+    private List<Employee> parsingRequestToDataModel(List<EmployeeRequest> employeeRequests) {
         List<Employee> employees;
         employees=employeeRequests.stream().map(emp->{
             Employee employee = parsingRequestToEmployeeModel(emp);
@@ -47,13 +52,13 @@ public class EmployeeService {
         return employees;
     }
 
-    private Department parsingRequestToDepartmentModel(CreateEmployeeRequest emp) {
+    private Department parsingRequestToDepartmentModel(EmployeeRequest emp) {
         Department department=new Department();
         department.setDepartment(emp.getDepartment());
         return department;
     }
 
-    private Employee parsingRequestToEmployeeModel(CreateEmployeeRequest emp) {
+    private Employee parsingRequestToEmployeeModel(EmployeeRequest emp) {
         Employee employee=new Employee();
         employee.setEmployeeName(emp.getEmpName());
         employee.setAmount(emp.getAmount());
@@ -71,7 +76,7 @@ public class EmployeeService {
 
     private int getMonthNumber(String month) {
         for(int i=0;i<months.size();i++){
-            if(months.get(i).contains(month)){
+            if(months.get(i).contains(month.toLowerCase())){
                 return i+1;
             }
         }
