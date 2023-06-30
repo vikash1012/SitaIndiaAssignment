@@ -34,6 +34,7 @@ public class EmployeeController {
     @GetMapping("tci/employee-bonus")
     @ResponseStatus(HttpStatus.OK)
     public GetAllEmployeeResponse getAllEmployee(@RequestParam("date") String date){
+       
         return this.employeeService.getEmployee(date);
     }
 
